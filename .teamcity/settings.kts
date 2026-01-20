@@ -35,6 +35,8 @@ project {
 object Build : BuildType({
     name = "Build"
 
+    artifactRules = "target/*.jar"
+
     vcs {
         root(DslContext.settingsRoot)
     }
@@ -47,8 +49,9 @@ object Build : BuildType({
             conditions {
                 equals("teamcity.build.branch", "master")
             }
-            goals = "clean package"
+            goals = "clean deploy"
             runnerArgs = "-Dmaven.test.failure.ignore=true"
+            userSettingsSelection = "nexus"
         }
         maven {
             name = "Maven test (non-master)"
